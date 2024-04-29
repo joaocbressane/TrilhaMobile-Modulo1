@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AvaliacaoApp.Views.ListarProdutorPage"
+             xmlns:viewmodel="clr-namespace:AvaliacaoApp.ViewModels"             
+             x:DataType="viewmodel:CadastroProdutorModel"      
+             xmlns:model="clr-namespace:AvaliacaoApp.Models"                          
+             Title="Lista de Produtores Cadastrados"
+             >
+
+    <Grid RowDefinitions="100, Auto, *"
+       ColumnDefinitions=".75*, .25*"
+       Padding="10"
+       RowSpacing="10"
+       ColumnSpacing="10"
+       >      
+            
+            <CollectionView Grid.Row="2" Grid.ColumnSpan="2"                            
+                 ItemsSource="{Binding Items}"                            
+                 SelectionMode="None"
+                 >
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Produtor">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Delete"
+                                 BackgroundColor="Red"
+                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CadastroProdutorModel}}, Path=DeleteCommand}"
+                                 CommandParameter="{Binding Nome}"
+                                
+                      />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+
+                        <Grid Padding="0,5">
+                            <Frame>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CadastroProdutorModel}}, Path=TapCommand}"
+                                        CommandParameter="{Binding Nome}"
+                                    />
+                                </Frame.GestureRecognizers>
+                                <Label Text="{Binding Nome}"
+                            FontSize="24"/>
+                            </Frame>
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+    </Grid>
+
+</ContentPage>
